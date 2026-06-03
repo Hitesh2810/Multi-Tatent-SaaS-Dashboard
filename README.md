@@ -1,149 +1,332 @@
-# 🚀 SaaS Admin Dashboard
+# 🚀 SaaS Management Platform
 
 <div align="center">
 
-![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge\&logo=next.js)
+![Next.js](https://img.shields.io/badge/Next.js-15-violet?style=for-the-badge\&logo=next.js)
 ![Django](https://img.shields.io/badge/Django-5-green?style=for-the-badge\&logo=django)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-blue?style=for-the-badge\&logo=postgresql)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES2024-yellow?style=for-the-badge\&logo=javascript)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=for-the-badge\&logo=tailwindcss)
-![DRF](https://img.shields.io/badge/Django_REST_Framework-red?style=for-the-badge)
+![Firebase](https://img.shields.io/badge/Firebase-Google_Auth-orange?style=for-the-badge\&logo=firebase)
 
-### 🌟 Enterprise Multi-Tenant SaaS Management Platform
+### 🌟 Enterprise Multi-Tenant SaaS Platform
 
-A modern, scalable, and production-ready SaaS Admin Dashboard built using **Next.js 15**, **JavaScript**, **Django REST Framework**, and **Supabase PostgreSQL**.
+A modern SaaS platform consisting of:
 
-Designed to provide centralized management of tenants, users, subscriptions, payments, analytics, notifications, and platform settings through an intuitive and highly interactive interface.
+✅ Admin Dashboard
+✅ User Portal
+✅ Multi-Tenant Architecture
+✅ Subscription Management
+✅ Payment Tracking
+✅ Notification System
+✅ Firebase Google Authentication
+✅ JWT Authentication
+✅ Responsive Design
+
+Built with Next.js, Django REST Framework, PostgreSQL, Firebase, and modern SaaS architecture.
 
 </div>
 
 ---
 
-# 📌 Features
+# ✨ Features
 
-## 🔐 Authentication & Authorization
+## 🔐 Authentication
 
-* JWT Authentication
-* Secure Login & Logout
+### Admin Authentication
+
+* JWT Login
+* JWT Logout
 * Token Refresh
-* Role-Based Access Control (RBAC)
 * Protected Routes
+* Role-Based Access
+
+### User Authentication
+
+* User Login
+* User Signup
+* Google Login
+* Firebase Authentication
 * Session Management
-
-### Supported Roles
-
-| Role            | Access                  |
-| --------------- | ----------------------- |
-| 👑 Super Admin  | Full System Access      |
-| 🏢 Tenant Admin | Tenant Level Management |
-| 👤 User         | Limited Access          |
+* JWT Integration
 
 ---
 
-# 📊 Dashboard Overview
+# 👥 User Roles
 
-Interactive dashboard with real-time insights.
-
-### Dashboard Widgets
-
-* 👥 Total Users
-* 🏢 Total Tenants
-* 💰 Revenue Tracking
-* 📈 Growth Metrics
-* 📦 Active Subscriptions
-* 🔔 Notifications
-
-### Analytics
-
-* Revenue Growth Charts
-* User Growth Charts
-* Subscription Analytics
-* Payment Trends
-* Business Insights
+| Role            | Access                 |
+| --------------- | ---------------------- |
+| 👑 SUPER_ADMIN  | Full Platform Access   |
+| 🏢 TENANT_ADMIN | Tenant Management      |
+| 👤 USER         | Customer Portal Access |
 
 ---
 
-# 🏢 Tenant Management
+# 🖥️ Admin Dashboard
 
-### Features
+Administrators can manage the entire platform.
+
+### Dashboard
+
+* Total Users
+* Total Tenants
+* Revenue Overview
+* Active Subscriptions
+* Notifications
+* Analytics
+
+### User Management
+
+* Create User
+* Edit User
+* Delete User
+* Search Users
+* Filter Users
+* View User Details
+
+### Tenant Management
 
 * Create Tenant
 * Edit Tenant
 * Delete Tenant
-* View Tenant Details
-* Tenant Status Management
 * Tenant Analytics
 
----
+### Subscription Management
 
-# 👤 User Management
+* View Subscriptions
+* Create Subscriptions
+* Renew Subscriptions
+* Monitor Expiry
 
-### Features
+### Payments
 
-* Create User
-* Update User
-* Delete User
-* Assign Roles
-* Search Users
-* Filter Users
-* User Activity Tracking
-
----
-
-# 📦 Subscription Management
-
-### Features
-
-* Plan Management
-* Subscription Tracking
-* Renewal Management
-* Expiry Monitoring
-* Billing Cycle Configuration
-
----
-
-# 💳 Payment Management
-
-### Features
-
+* Revenue Analytics
 * Payment History
-* Revenue Reports
 * Transaction Tracking
-* Payment Status Monitoring
-* Financial Analytics
+* Payment Status
 
----
+### Notifications
 
-# 🔔 Notifications
-
-### Features
-
+* Create Notifications
 * Send Notifications
-* Broadcast Messages
-* Read / Unread Status
-* User Alerts
-* System Notifications
+* View Notification History
 
----
-
-# ⚙️ Settings Management
-
-### Features
+### Settings
 
 * General Settings
+* Branding Settings
+* SMTP Settings
 * Security Settings
-* SMTP Configuration
-* Branding Configuration
-* Application Preferences
 
 ---
 
-# 🏗️ Project Architecture
+# 👤 User Portal
+
+Users have a dedicated customer-facing portal.
+
+### User Dashboard
+
+* Welcome Section
+* Subscription Summary
+* Payment Summary
+* Notification Summary
+* Account Information
+
+### User Profile
+
+* Edit Profile
+* Update Personal Information
+* Change Password
+* Upload Avatar
+
+### User Subscription
+
+* Browse Plans
+* Subscribe
+* Upgrade
+* Renew Subscription
+
+### User Payments
+
+* Payment History
+* Transaction Tracking
+* Status Monitoring
+
+### User Notifications
+
+* Notification Center
+* Read/Unread Status
+* Notification Drawer
+
+### User Settings
+
+* Profile Settings
+* Security Settings
+* Notification Preferences
+* Theme Settings
+
+---
+
+# 🔄 Admin ↔ User Synchronization
+
+The platform is fully integrated.
+
+### User Registration
+
+When a user signs up:
+
+```text
+User Signup
+      ↓
+Backend
+      ↓
+Admin Dashboard Users
+```
+
+The newly registered user automatically appears in:
+
+```text
+Admin Dashboard → Users
+```
+
+---
+
+### User Subscription
+
+When a user subscribes:
+
+```text
+User Subscription
+       ↓
+Backend
+       ↓
+Admin Dashboard Subscriptions
+```
+
+The subscription automatically appears in:
+
+```text
+Admin Dashboard → Subscriptions
+```
+
+---
+
+### User Payment
+
+When a user completes a payment:
+
+```text
+Dummy Payment Flow
+       ↓
+Backend
+       ↓
+Admin Dashboard Payments
+```
+
+The payment automatically appears in:
+
+```text
+Admin Dashboard → Payments
+```
+
+---
+
+### Notifications
+
+When an admin sends a notification:
+
+```text
+Admin Dashboard
+       ↓
+Backend
+       ↓
+User Portal
+```
+
+The notification appears in:
+
+```text
+User Dashboard
+User Notifications
+```
+
+---
+
+# 💳 Dummy Payment System
+
+A simulated payment system is implemented.
+
+### Flow
+
+```text
+User Selects Plan
+       ↓
+Payment Modal
+       ↓
+Card Validation
+       ↓
+Generate Transaction ID
+       ↓
+Save Payment
+       ↓
+Activate Subscription
+```
+
+Example Transaction:
+
+```text
+TXN-2026-10001
+```
+
+No third-party payment gateway is required.
+
+---
+
+# 🔔 Notification System
+
+Features:
+
+* Create Notifications
+* User Notifications
+* Read/Unread Tracking
+* Notification Drawer
+* Notification Badge Count
+
+---
+
+# 🎨 UI / UX Features
+
+Inspired by:
+
+* Linear
+* Stripe
+* Vercel
+* Framer
+* Notion
+* Supabase
+
+### Design Features
+
+* Glassmorphism
+* Animated Gradients
+* Framer Motion Animations
+* Floating Cards
+* Soft Shadows
+* Hover Effects
+* Micro Interactions
+* Dark Mode
+* Light Mode
+* Responsive Layout
+
+---
+
+# 🏗️ Project Structure
 
 ```text
 SAAS/
 │
 ├── backend/
+│   │
 │   ├── accounts/
 │   ├── tenants/
 │   ├── subscriptions/
@@ -152,143 +335,64 @@ SAAS/
 │   ├── notifications_app/
 │   ├── settings_app/
 │   ├── config/
+│   │
 │   ├── manage.py
 │   └── requirements.txt
 │
-└── frontend/
-    │
-    ├── public/
-    │
-    ├── src/
-    │   │
-    │   ├── app/
-    │   │   ├── login/
-    │   │   │   └── page.js
-    │   │   ├── dashboard/
-    │   │   │   └── page.js
-    │   │   ├── tenants/
-    │   │   │   └── page.js
-    │   │   ├── users/
-    │   │   │   └── page.js
-    │   │   ├── subscriptions/
-    │   │   │   └── page.js
-    │   │   ├── payments/
-    │   │   │   └── page.js
-    │   │   ├── notifications/
-    │   │   │   └── page.js
-    │   │   ├── analytics/
-    │   │   │   └── page.js
-    │   │   └── settings/
-    │   │       └── page.js
-    │   │
-    │   ├── components/
-    │   │   ├── layout/
-    │   │   ├── ui/
-    │   │   ├── charts/
-    │   │   ├── tables/
-    │   │   └── common/
-    │   │
-    │   ├── contexts/
-    │   │   ├── AuthContext.js
-    │   │   └── ThemeContext.js
-    │   │
-    │   ├── hooks/
-    │   │
-    │   ├── lib/
-    │   │   └── api.js
-    │   │
-    │   ├── services/
-    │   │
-    │   ├── utils/
-    │   │
-    │   ├── features/
-    │   │   │
-    │   │   ├── dashboard/
-    │   │   │   ├── dashboard.js
-    │   │   │   ├── DashboardCards.js
-    │   │   │   ├── DashboardCharts.js
-    │   │   │   └── DashboardStats.js
-    │   │   │
-    │   │   ├── tenants/
-    │   │   │   ├── tenants.js
-    │   │   │   ├── TenantTable.js
-    │   │   │   ├── TenantForm.js
-    │   │   │   └── TenantModal.js
-    │   │   │
-    │   │   ├── users/
-    │   │   │   ├── users.js
-    │   │   │   ├── UserTable.js
-    │   │   │   ├── UserDrawer.js
-    │   │   │   └── UserForm.js
-    │   │   │
-    │   │   ├── subscriptions/
-    │   │   │   ├── subscriptions.js
-    │   │   │   ├── PricingCards.js
-    │   │   │   ├── SubscriptionTable.js
-    │   │   │   └── RenewalModal.js
-    │   │   │
-    │   │   ├── payments/
-    │   │   │   ├── payments.js
-    │   │   │   ├── PaymentTable.js
-    │   │   │   ├── RevenueCards.js
-    │   │   │   └── PaymentModal.js
-    │   │   │
-    │   │   ├── notifications/
-    │   │   │   ├── notifications.js
-    │   │   │   ├── NotificationDrawer.js
-    │   │   │   └── NotificationList.js
-    │   │   │
-    │   │   ├── analytics/
-    │   │   │   ├── analytics.js
-    │   │   │   ├── AnalyticsCharts.js
-    │   │   │   └── AnalyticsCards.js
-    │   │   │
-    │   │   └── settings/
-    │   │       ├── settings.js
-    │   │       ├── GeneralSettings.js
-    │   │       ├── BrandingSettings.js
-    │   │       ├── SMTPSettings.js
-    │   │       └── SecuritySettings.js
-    │   │
-    │   ├── styles/
-    │   └── constants/
-    │
-    ├── .env.local
-    ├── package.json
-    ├── next.config.js
-    ├── tailwind.config.js
-    └── jsconfig.json
+├── frontend/
+│   │
+│   ├── public/
+│   │
+│   ├── src/
+│   │
+│   ├── app/
+│   │   │
+│   │   ├── dashboard/
+│   │   ├── users/
+│   │   ├── tenants/
+│   │   ├── subscriptions/
+│   │   ├── payments/
+│   │   ├── notifications/
+│   │   ├── analytics/
+│   │   ├── settings/
+│   │   │
+│   │   └── user/
+│   │       │
+│   │       ├── login/
+│   │       ├── signup/
+│   │       ├── dashboard/
+│   │       ├── profile/
+│   │       ├── subscription/
+│   │       ├── payments/
+│   │       ├── notifications/
+│   │       └── settings/
+│   │
+│   ├── features/
+│   │   │
+│   │   ├── dashboard/
+│   │   ├── users/
+│   │   ├── tenants/
+│   │   ├── subscriptions/
+│   │   ├── payments/
+│   │   ├── notifications/
+│   │   ├── analytics/
+│   │   ├── settings/
+│   │   │
+│   │   └── user/
+│   │
+│   ├── components/
+│   ├── contexts/
+│   ├── hooks/
+│   ├── services/
+│   ├── utils/
+│   ├── lib/
+│   │   ├── api.js
+│   │   └── firebase.js
+│   │
+│   └── styles/
+│
+└── README.md
 ```
-
----
-
-# 🛠️ Tech Stack
-
-## Frontend
-
-* Next.js 15
-* JavaScript (ES2024)
-* Tailwind CSS
-* ShadCN UI
-* Framer Motion
-* React Query
-* TanStack Table
-* Recharts
-* Axios
-* Lucide Icons
-
-## Backend
-
-* Django
-* Django REST Framework
-* JWT Authentication
-* CORS
-* Swagger/OpenAPI
-
-## Database
-
-* PostgreSQL
-* Supabase
 
 ---
 
@@ -304,14 +408,7 @@ POST /api/auth/token/refresh/
 GET  /api/auth/me/
 ```
 
-## Tenants
-
-```http
-GET    /api/tenants/
-POST   /api/tenants/
-PUT    /api/tenants/{id}/
-DELETE /api/tenants/{id}/
-```
+---
 
 ## Users
 
@@ -322,12 +419,27 @@ PUT    /api/users/{id}/
 DELETE /api/users/{id}/
 ```
 
+---
+
+## Tenants
+
+```http
+GET    /api/tenants/
+POST   /api/tenants/
+PUT    /api/tenants/{id}/
+DELETE /api/tenants/{id}/
+```
+
+---
+
 ## Subscriptions
 
 ```http
 GET    /api/subscriptions/
 POST   /api/subscriptions/
 ```
+
+---
 
 ## Payments
 
@@ -336,6 +448,8 @@ GET    /api/payments/
 POST   /api/payments/
 ```
 
+---
+
 ## Notifications
 
 ```http
@@ -343,17 +457,60 @@ GET    /api/notifications/
 POST   /api/notifications/
 ```
 
-## Analytics
+---
 
-```http
-GET /api/analytics/dashboard/
+# 🔥 Firebase Configuration
+
+Create:
+
+```env
+frontend/.env.local
 ```
 
-## Settings
+Add:
 
-```http
-GET  /api/settings/
-POST /api/settings/
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+```
+
+Enable:
+
+```text
+Firebase Authentication
+→ Google Provider
+→ Enable
+```
+
+---
+
+# ⚙️ Backend Environment
+
+Create:
+
+```env
+backend/.env
+```
+
+Example:
+
+```env
+SECRET_KEY=your-secret-key
+
+DEBUG=True
+
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASSWORD=password
+DB_HOST=localhost
+DB_PORT=5432
+
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
 ```
 
 ---
@@ -379,7 +536,7 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Backend URL:
+Backend:
 
 ```text
 http://127.0.0.1:8000
@@ -397,20 +554,43 @@ npm install
 npm run dev
 ```
 
-Create:
-
-```env
-frontend/.env.local
-```
-
-```env
-NEXT_PUBLIC_API_URL=http://127.0.0.1:8000/api
-```
-
-Frontend URL:
+Frontend:
 
 ```text
 http://localhost:3000
+```
+
+---
+
+# 🌐 Deployment
+
+## Render
+
+Deploy:
+
+### Backend
+
+Render Web Service
+
+```text
+Root Directory:
+backend
+```
+
+### Frontend
+
+Render Web Service
+
+```text
+Root Directory:
+frontend
+```
+
+Add environment variables from:
+
+```text
+backend/.env
+frontend/.env.local
 ```
 
 ---
@@ -420,34 +600,17 @@ http://localhost:3000
 * JWT Authentication
 * Refresh Tokens
 * Protected Routes
-* RBAC
+* Firebase Google Authentication
+* Role-Based Access Control
 * Secure Password Hashing
 * Environment Variables
-* Token Expiration Handling
-* Auto Logout
-* API Authorization Headers
-
----
-
-# 🎨 UI/UX Highlights
-
-* Glassmorphism
-* Animated Gradients
-* Floating Cards
-* 3D Hover Effects
-* Page Transitions
-* Particle Backgrounds
-* Dark Mode
-* Light Mode
-* Framer Motion Animations
-* Mobile Responsive Layout
-* Enterprise Dashboard Experience
+* Access Control
 
 ---
 
 # 👨‍💻 Author
 
-### Hitesh Kumar S
+## Hitesh Kumar S
 
 🎓 Amrita Vishwa Vidyapeetham
 
@@ -457,8 +620,8 @@ http://localhost:3000
 
 <div align="center">
 
-### ⭐ If you found this project useful, give it a star!
+### ⭐ Star this repository if you found it useful
 
-🚀 Built with Next.js + JavaScript + Django + Supabase
+🚀 Built with Next.js + JavaScript + Django + PostgreSQL + Firebase
 
 </div>

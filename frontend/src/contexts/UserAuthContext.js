@@ -2,7 +2,9 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { signInWithPopup } from "firebase/auth";
 import { toast } from "sonner";
+import { firebaseAuth, googleProvider, isFirebaseConfigured } from "@/lib/firebase";
 import api, { apiErrorMessage, tokenStore } from "@/lib/api";
 
 const UserAuthContext = createContext(null);
@@ -10,6 +12,23 @@ const UserAuthContext = createContext(null);
 function cacheUser(user) {
   if (typeof window === "undefined") return;
   if (user) localStorage.setItem("currentUser", JSON.stringify(user));
+}
+
+function splitDisplayName(displayName) {
+  const parts = (displayName || "").trim().split(" ").filter(Boolean);
+  return {
+    first_name: parts[0] || "",
+    last_name: parts.slice(1).join(" ")
+  };
+}
+
+function googlePassword(uid) {
+  return `Google-${uid}-Sourcesys-2026!`;
+}
+
+function googleUsername(email, uid) {
+  const base = (email || "google-user").split("@", 1)[0].replace(/[^A-Za-z0-9_]/g, "");
+  return `${base || "google"}_${uid.slice(0, 8)}`;
 }
 
 export function UserAuthProvider({ children }) {
@@ -76,6 +95,56 @@ export function UserAuthProvider({ children }) {
     }
   }
 
+  async function loginWithGoogle() {
+    try {
+      if (!isFirebaseConfigured || !firebaseAuth || !googleProvider) {
+        throw new Error("Google sign-in is not configured. Add your Firebase web app values to .env.local and restart the dev server.");
+      }
+
+      const result = await signInWithPopup(firebaseAuth, googleProvider);
+      const firebaseUser = result.user;
+      const googleUser = {
+        displayName: firebaseUser.displayName || "",
+        email: firebaseUser.email || "",
+        uid: firebaseUser.uid,
+        photoURL: firebaseUser.photoURL || ""
+      };
+
+      if (!googleUser.email) throw new Error("Google account did not return an email address.");
+
+      const password = googlePassword(googleUser.uid);
+      const names = splitDisplayName(googleUser.displayName);
+      const registerPayload = {
+        username: googleUsername(googleUser.email, googleUser.uid),
+        email: googleUser.email,
+        password,
+        first_name: names.first_name,
+        last_name: names.last_name,
+        role: "USER"
+      };
+
+      try {
+        await api.post("/auth/register/", registerPayload);
+      } catch (error) {
+        if (error?.response?.status !== 400) throw error;
+      }
+
+      const response = await api.post("/auth/login/", { email: googleUser.email, password });
+      tokenStore.set(response.data.access, response.data.refresh);
+      const profile = response.data.user || (await refreshUser());
+      setUser(profile);
+      cacheUser(profile);
+      localStorage.setItem("firebaseUser", JSON.stringify(googleUser));
+      localStorage.setItem("rememberUser", googleUser.email);
+      toast.success("Signed in with Google");
+      router.push("/user/dashboard");
+      return { firebaseUser: googleUser, user: profile };
+    } catch (error) {
+      toast.error(apiErrorMessage(error));
+      throw error;
+    }
+  }
+
   async function updateProfile(payload) {
     const response = await api.patch("/auth/me/", payload);
     setUser(response.data);
@@ -108,6 +177,8 @@ export function UserAuthProvider({ children }) {
     isBooting,
     isAuthenticated: Boolean(tokenStore.getAccess()),
     login,
+    loginWithGoogle,
+    isGoogleAuthConfigured: isFirebaseConfigured,
     signup,
     logout,
     refreshUser,
