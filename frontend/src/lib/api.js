@@ -61,7 +61,9 @@ api.interceptors.response.use(
       } catch (refreshError) {
         refreshPromise = null;
         tokenStore.clear();
-        if (typeof window !== "undefined") window.location.href = "/login";
+        if (typeof window !== "undefined") {
+          window.location.href = window.location.pathname.startsWith("/user") ? "/user/login" : "/login";
+        }
         return Promise.reject(refreshError);
       }
     }

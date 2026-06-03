@@ -1,15 +1,16 @@
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from common.permissions import TenantScopedPermission, is_super_admin
+from common.permissions import is_super_admin, is_tenant_admin
 from subscriptions.models import Subscription
 from subscriptions.serializers import RenewSubscriptionSerializer, SubscriptionSerializer
 
 
 class SubscriptionViewSet(viewsets.ModelViewSet):
     serializer_class = SubscriptionSerializer
-    permission_classes = [TenantScopedPermission]
+    permission_classes = [IsAuthenticated]
     filterset_fields = ["tenant", "status", "billing_cycle", "plan_name"]
 
     def get_queryset(self):
@@ -25,10 +26,17 @@ class SubscriptionViewSet(viewsets.ModelViewSet):
         serializer.save()
 
     def perform_update(self, serializer):
+        if not (is_super_admin(self.request.user) or is_tenant_admin(self.request.user)):
+            self.permission_denied(self.request, "Customers cannot modify subscriptions directly.")
         tenant = serializer.validated_data.get("tenant", serializer.instance.tenant)
         if not is_super_admin(self.request.user) and tenant.id != self.request.user.tenant_id:
             self.permission_denied(self.request, "Cannot move subscriptions outside your tenant.")
         serializer.save()
+
+    def perform_destroy(self, instance):
+        if not (is_super_admin(self.request.user) or is_tenant_admin(self.request.user)):
+            self.permission_denied(self.request, "Customers cannot delete subscriptions.")
+        return super().perform_destroy(instance)
 
     @action(detail=True, methods=["post"])
     def renew(self, request, pk=None):

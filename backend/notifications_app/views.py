@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from common.permissions import TenantScopedPermission, is_super_admin, is_tenant_admin
@@ -11,6 +12,11 @@ class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
     permission_classes = [TenantScopedPermission]
     filterset_fields = ["recipient", "is_read"]
+
+    def get_permissions(self):
+        if self.action == "mark_as_read":
+            return [IsAuthenticated()]
+        return super().get_permissions()
 
     def get_queryset(self):
         qs = Notification.objects.select_related("recipient", "recipient__tenant")

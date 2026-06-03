@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { UserAuthProvider } from "@/contexts/UserAuthContext";
 
 export default function Providers({ children }) {
   const pathname = usePathname();
@@ -24,17 +25,19 @@ export default function Providers({ children }) {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <AuthProvider>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={pathname}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-            >
-              {children}
-            </motion.div>
-          </AnimatePresence>
+          <UserAuthProvider>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={pathname}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+              >
+                {children}
+              </motion.div>
+            </AnimatePresence>
+          </UserAuthProvider>
           <Toaster richColors position="top-right" closeButton />
         </AuthProvider>
       </ThemeProvider>

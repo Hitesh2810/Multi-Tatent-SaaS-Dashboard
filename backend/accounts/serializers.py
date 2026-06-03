@@ -4,6 +4,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from common.constants import SUPER_ADMIN, TENANT_ADMIN, USER
+from tenants.models import Tenant
 
 User = get_user_model()
 
@@ -15,6 +16,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("id", "username", "email", "first_name", "last_name", "role", "tenant", "tenant_name", "is_active", "created_at", "updated_at")
         read_only_fields = ("id", "created_at", "updated_at")
+
+
+class CurrentUserSerializer(UserSerializer):
+    class Meta(UserSerializer.Meta):
+        read_only_fields = ("id", "role", "tenant", "tenant_name", "is_active", "created_at", "updated_at")
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -63,6 +69,17 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop("password", None)
+        request = self.context.get("request")
+        if (not request or not request.user.is_authenticated) and not validated_data.get("tenant"):
+            email = validated_data.get("email", "")
+            domain = email.split("@", 1)[1].lower() if "@" in email else f"{validated_data.get('username', 'user')}.local"
+            tenant_name = f"{validated_data.get('first_name') or validated_data.get('username') or 'Customer'} Workspace"
+            tenant, _ = Tenant.objects.get_or_create(
+                domain=domain,
+                defaults={"name": tenant_name, "contact_email": email}
+            )
+            validated_data["tenant"] = tenant
+            validated_data["role"] = USER
         user = User(**validated_data)
         if password:
             user.set_password(password)

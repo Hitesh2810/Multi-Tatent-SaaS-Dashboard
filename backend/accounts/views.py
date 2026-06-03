@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from accounts.serializers import AssignRoleSerializer, ChangePasswordSerializer, LoginSerializer, RegisterSerializer, UserSerializer
+from accounts.serializers import AssignRoleSerializer, ChangePasswordSerializer, CurrentUserSerializer, LoginSerializer, RegisterSerializer, UserSerializer
 from common.constants import SUPER_ADMIN, TENANT_ADMIN
 from common.permissions import TenantScopedPermission, is_super_admin, is_tenant_admin
 
@@ -34,8 +34,8 @@ class LogoutView(generics.GenericAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class CurrentUserView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
+class CurrentUserView(generics.RetrieveUpdateAPIView):
+    serializer_class = CurrentUserSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
